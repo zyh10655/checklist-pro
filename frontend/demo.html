@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -866,4 +867,874 @@
         window.onload = init;
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenChecklist - Free Professional Industry Checklists</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-donate {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 3rem 0;
+            background: var(--bg-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Checklists Grid */
+        .checklists {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .checklists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .checklist-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .checklist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .checklist-header {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .checklist-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .checklist-info {
+            padding: 1.5rem;
+        }
+
+        .checklist-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .checklist-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .checklist-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .checklist-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .checklist-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .checklist-actions button {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checklist-actions button:hover {
+            background: var(--bg-light);
+        }
+
+        .btn-download {
+            background: var(--primary-color) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        /* Community Section */
+        .community {
+            padding: 4rem 0;
+            background: var(--bg-light);
+        }
+
+        .community-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .community-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .community-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Contribute Section */
+        .contribute {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .contribute-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contribute-card {
+            padding: 2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .contribute-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .open-source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .checklist-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <span>🌟</span> OpenChecklist
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#checklists">Browse</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#contribute">Contribute</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="btn btn-donate" onclick="showDonateModal()">❤️ Support Us</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Free Professional Checklists for Everyone</h1>
+            <p>Open-source, community-driven checklists to help you succeed in any industry</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#checklists" class="btn">Browse Checklists</a>
+                <a href="#contribute" class="btn btn-secondary">Contribute</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="checklistCount">24</h3>
+                    <p>Free Checklists</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="downloadCount">15,420</h3>
+                    <p>Downloads</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="contributorCount">187</h3>
+                    <p>Contributors</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="updateCount">Weekly</h3>
+                    <p>Updates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checklists Section -->
+    <section class="checklists" id="checklists">
+        <div class="container">
+            <h2 class="section-title">Browse Free Checklists</h2>
+            <p class="section-subtitle">All checklists are free to download, modify, and share</p>
+            <div class="checklists-grid" id="checklistsGrid">
+                <!-- Checklists will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="container">
+            <h2 class="section-title">Join Our Community</h2>
+            <p class="section-subtitle">Built by professionals, for professionals</p>
+            <div class="community-features">
+                <div class="community-card">
+                    <div class="community-icon">💬</div>
+                    <h3>Discussion Forum</h3>
+                    <p>Ask questions, share experiences, and connect with others in your industry</p>
+                    <button class="btn" style="margin-top: 1rem;">Join Forum</button>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">🔄</div>
+                    <h3>Weekly Updates</h3>
+                    <p>Get notified about new checklists, updates, and community highlights</p>
+                    <button class="btn" style="margin-top: 1rem;">Subscribe</button>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">🎯</div>
+                    <h3>Success Stories</h3>
+                    <p>Read how others have used our checklists to achieve their goals</p>
+                    <button class="btn" style="margin-top: 1rem;">Read Stories</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section class="contribute" id="contribute">
+        <div class="container">
+            <h2 class="section-title">Ways to Contribute</h2>
+            <p class="section-subtitle">Help us build the world's best collection of professional checklists</p>
+            <div class="contribute-options">
+                <div class="contribute-card">
+                    <h3>📝 Create Checklists</h3>
+                    <p>Share your expertise by creating new checklists for your industry</p>
+                </div>
+                <div class="contribute-card">
+                    <h3>🔍 Review & Improve</h3>
+                    <p>Help review and improve existing checklists with your knowledge</p>
+                </div>
+                <div class="contribute-card">
+                    <h3>🌐 Translate</h3>
+                    <p>Make checklists accessible globally by translating them</p>
+                </div>
+                <div class="contribute-card">
+                    <h3>💰 Sponsor</h3>
+                    <p>Support our infrastructure and community initiatives</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">All Checklists</a>
+                    <a href="#">Templates</a>
+                    <a href="#">Guides</a>
+                    <a href="#">API Access</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <a href="#">Forum</a>
+                    <a href="#">Contributors</a>
+                    <a href="#">Success Stories</a>
+                    <a href="#">Newsletter</a>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <a href="#">Mission</a>
+                    <a href="#">Open Source</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Email</a>
+                </div>
+            </div>
+            <div class="open-source-badge">
+                <span>🔓</span>
+                <span>Open Source • CC BY 4.0</span>
+            </div>
+            <p style="margin-top: 2rem; color: #9ca3af;">Made with ❤️ by the OpenChecklist Community</p>
+        </div>
+    </footer>
+
+    <!-- Checklist Detail Modal -->
+    <div class="modal" id="checklistModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Checklist details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Donate Modal -->
+    <div class="modal" id="donateModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeDonateModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2 style="margin-bottom: 1rem;">Support OpenChecklist</h2>
+                <p style="margin-bottom: 2rem; color: var(--text-light);">
+                    Your donation helps us maintain servers, improve checklists, and support our community.
+                </p>
+                <div style="display: grid; gap: 1rem; max-width: 400px; margin: 0 auto;">
+                    <button class="btn" style="padding: 1rem;">$5 - Buy us a coffee</button>
+                    <button class="btn" style="padding: 1rem;">$25 - Support monthly hosting</button>
+                    <button class="btn" style="padding: 1rem;">$100 - Sponsor new checklist</button>
+                    <button class="btn" style="padding: 1rem;">Custom amount</button>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-light);">
+                    All donations are processed securely. You'll receive a receipt and our eternal gratitude! 💚
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample checklist data for free/open model
+        const checklists = [
+            {
+                id: 1,
+                title: "Food Truck Business Checklist",
+                description: "Complete guide to launching your food truck from concept to first sale",
+                icon: "🚚",
+                downloads: 3420,
+                contributors: 12,
+                lastUpdated: "2 days ago",
+                version: "2.1",
+                formats: ["PDF", "Markdown", "Excel"],
+                features: [
+                    "150+ step checklist",
+                    "Permit templates",
+                    "Menu planning tools",
+                    "Supplier directory"
+                ]
+            },
+            {
+                id: 2,
+                title: "Therapy Practice Checklist",
+                description: "Step-by-step guide to starting your independent therapy practice",
+                icon: "🧠",
+                downloads: 2150,
+                contributors: 8,
+                lastUpdated: "1 week ago",
+                version: "1.8",
+                formats: ["PDF", "Markdown", "Word"],
+                features: [
+                    "200+ step checklist",
+                    "Insurance forms",
+                    "Client intake templates",
+                    "HIPAA compliance guide"
+                ]
+            },
+            {
+                id: 3,
+                title: "Podcast Production Workflow",
+                description: "Professional podcast setup and production system",
+                icon: "🎙️",
+                downloads: 5670,
+                contributors: 15,
+                lastUpdated: "3 days ago",
+                version: "3.0",
+                formats: ["PDF", "Markdown", "Notion"],
+                features: [
+                    "Equipment checklist",
+                    "Recording templates",
+                    "Editing workflow",
+                    "Distribution guide"
+                ]
+            },
+            {
+                id: 4,
+                title: "Specialty Retail Shop Package",
+                description: "Everything you need to open your boutique retail store",
+                icon: "🏪",
+                downloads: 1890,
+                contributors: 6,
+                lastUpdated: "5 days ago",
+                version: "1.5",
+                formats: ["PDF", "Excel", "Google Sheets"],
+                features: [
+                    "175+ step checklist",
+                    "Inventory templates",
+                    "POS setup guide",
+                    "Marketing calendar"
+                ]
+            },
+            {
+                id: 5,
+                title: "Freelance Designer Toolkit",
+                description: "Complete system for launching and managing your design business",
+                icon: "🎨",
+                downloads: 4320,
+                contributors: 10,
+                lastUpdated: "1 day ago",
+                version: "2.5",
+                formats: ["PDF", "Figma", "Notion"],
+                features: [
+                    "Client onboarding process",
+                    "Contract templates",
+                    "Pricing calculator",
+                    "Portfolio guidelines"
+                ]
+            },
+            {
+                id: 6,
+                title: "Online Course Creation",
+                description: "Build and launch your online course from scratch",
+                icon: "📚",
+                downloads: 6890,
+                contributors: 18,
+                lastUpdated: "4 days ago",
+                version: "4.0",
+                formats: ["PDF", "Markdown", "Trello"],
+                features: [
+                    "Course planning framework",
+                    "Video production checklist",
+                    "Marketing templates",
+                    "Student engagement tools"
+                ]
+            }
+        ];
+
+        // Initialize the app
+        function init() {
+            renderChecklists();
+            animateStats();
+        }
+
+        // Render checklists
+        function renderChecklists() {
+            const grid = document.getElementById('checklistsGrid');
+            grid.innerHTML = checklists.map(checklist => `
+                <div class="checklist-card">
+                    <div class="checklist-header">
+                        <div class="checklist-icon">${checklist.icon}</div>
+                    </div>
+                    <div class="checklist-info">
+                        <h3 class="checklist-title">${checklist.title}</h3>
+                        <p class="checklist-description">${checklist.description}</p>
+                        <div class="checklist-meta">
+                            <span>v${checklist.version}</span>
+                            <span>Updated ${checklist.lastUpdated}</span>
+                        </div>
+                        <div class="checklist-stats">
+                            <span class="stat-badge">
+                                <span>⬇️</span> ${checklist.downloads.toLocaleString()}
+                            </span>
+                            <span class="stat-badge">
+                                <span>👥</span> ${checklist.contributors}
+                            </span>
+                        </div>
+                        <div class="checklist-actions">
+                            <button onclick="viewChecklist(${checklist.id})">View Details</button>
+                            <button class="btn-download" onclick="downloadChecklist(${checklist.id})">
+                                Download Free
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // View checklist details
+        function viewChecklist(checklistId) {
+            const checklist = checklists.find(c => c.id === checklistId);
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 5rem; margin-bottom: 1rem;">${checklist.icon}</div>
+                    <h2>${checklist.title}</h2>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                        <span class="stat-badge">⬇️ ${checklist.downloads.toLocaleString()} downloads</span>
+                        <span class="stat-badge">👥 ${checklist.contributors} contributors</span>
+                        <span class="stat-badge">🔄 v${checklist.version}</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">What's Included:</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        ${checklist.features.map(feature => `
+                            <li style="padding: 0.5rem 0; color: var(--text-light);">
+                                <span style="color: var(--primary-color); font-weight: bold;">✓</span> ${feature}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">Available Formats:</h3>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        ${checklist.formats.map(format => `
+                            <button class="btn" style="padding: 0.5rem 1rem;">${format}</button>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn" style="background: var(--primary-color); color: white; padding: 1rem 2rem;" onclick="downloadChecklist(${checklist.id}); closeModal();">
+                        Download Free
+                    </button>
+                    <p style="margin-top: 1rem; color: var(--text-light);">
+                        Licensed under CC BY 4.0 - Free to use, modify, and share
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('checklistModal').style.display = 'block';
+        }
+
+        // Download checklist
+        function downloadChecklist(checklistId) {
+            const checklist = checklists.find(c => c.id === checklistId);
+            
+            // Update download count
+            checklist.downloads += 1;
+            renderChecklists();
+            
+            // In a real app, this would trigger actual file download
+            alert(`Starting download of ${checklist.title}...\n\nIn a real application, this would download the checklist files.`);
+        }
+
+        // Show donate modal
+        function showDonateModal() {
+            document.getElementById('donateModal').style.display = 'block';
+        }
+
+        // Close modals
+        function closeModal() {
+            document.getElementById('checklistModal').style.display = 'none';
+        }
+
+        function closeDonateModal() {
+            document.getElementById('donateModal').style.display = 'none';
+        }
+
+        // Animate stats
+        function animateStats() {
+            const stats = [
+                { id: 'checklistCount', target: 24, duration: 1000 },
+                { id: 'downloadCount', target: 15420, duration: 2000 },
+                { id: 'contributorCount', target: 187, duration: 1500 }
+            ];
+
+            stats.forEach(stat => {
+                let current = 0;
+                const increment = stat.target / (stat.duration / 50);
+                const element = document.getElementById(stat.id);
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= stat.target) {
+                        current = stat.target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString();
+                }, 50);
+            });
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const checklistModal = document.getElementById('checklistModal');
+            const donateModal = document.getElementById('donateModal');
+            
+            if (event.target === checklistModal) {
+                closeModal();
+            }
+            if (event.target === donateModal) {
+                closeDonateModal();
+            }
+        }
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+>>>>>>> Stashed changes
 </html>
