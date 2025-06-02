@@ -473,6 +473,29 @@
             margin-top: 1rem;
         }
 
+        /* Category Buttons */
+        .category-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -549,6 +572,39 @@
         <div class="container">
             <h2 class="section-title">Browse Free Checklists</h2>
             <p class="section-subtitle">All checklists are free to download, modify, and share</p>
+            
+            <!-- Search Bar -->
+            <div style="max-width: 600px; margin: 2rem auto;">
+                <div style="position: relative;">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search checklists by name, category, or keyword..." 
+                        style="width: 100%; padding: 1rem 3rem 1rem 1rem; border: 2px solid var(--border-color); border-radius: 50px; font-size: 1rem;"
+                    >
+                    <button 
+                        onclick="searchChecklists()" 
+                        style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: var(--primary-color); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 50px; cursor: pointer;"
+                    >
+                        🔍 Search
+                    </button>
+                </div>
+                <div id="searchResults" style="margin-top: 1rem; text-align: center; color: var(--text-light);"></div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 2rem 0;">
+                <button class="category-btn active" onclick="filterByCategory('all')">All Categories</button>
+                <button class="category-btn" onclick="filterByCategory('Business')">💼 Business</button>
+                <button class="category-btn" onclick="filterByCategory('Healthcare')">🏥 Healthcare</button>
+                <button class="category-btn" onclick="filterByCategory('Technology')">💻 Technology</button>
+                <button class="category-btn" onclick="filterByCategory('Creative Services')">🎨 Creative</button>
+                <button class="category-btn" onclick="filterByCategory('Education')">📚 Education</button>
+                <button class="category-btn" onclick="filterByCategory('Food & Beverage')">🍔 Food & Beverage</button>
+                <button class="category-btn" onclick="filterByCategory('Media & Entertainment')">🎬 Media</button>
+                <button class="category-btn" onclick="filterByCategory('Retail')">🛍️ Retail</button>
+            </div>
+            
             <div class="checklists-grid" id="checklistsGrid">
                 <!-- Checklists will be dynamically loaded here -->
             </div>
@@ -714,6 +770,52 @@
         </div>
     </div>
 
+    <!-- Contribution Modal -->
+    <div class="modal" id="contributionModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeContributionModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2 style="margin-bottom: 1rem;">💡 Contribute to <span id="contributionChecklistTitle"></span></h2>
+                <p style="color: var(--text-light); margin-bottom: 2rem;">
+                    Help improve this checklist by sharing your expertise
+                </p>
+                <form id="contributionForm" style="text-align: left;">
+                    <input type="hidden" id="contributionChecklistId">
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Your Name</label>
+                        <input type="text" id="contributorName" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 5px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                        <input type="email" id="contributorEmail" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 5px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Contribution Type</label>
+                        <select id="contributionType" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 5px;">
+                            <option value="item">New Checklist Item</option>
+                            <option value="correction">Correction/Update</option>
+                            <option value="resource">Additional Resource</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Your Contribution</label>
+                        <textarea id="contributionContent" required rows="5" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 5px;" placeholder="Share your suggestion, correction, or additional resource..."></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn" style="flex: 1;">Submit Contribution</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeContributionModal()" style="flex: 1;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <span id="toastMessage">Download started!</span>
@@ -847,6 +949,12 @@
                     </div>
                 </div>
                 
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <button class="btn btn-secondary" onclick="showContributionModal(${checklist.id}, '${checklist.title}')">
+                        💡 Contribute to This Checklist
+                    </button>
+                </div>
+                
                 <div style="text-align: center;">
                     <p style="margin-top: 1rem; color: var(--text-light);">
                         Licensed under CC BY 4.0 - Free to use, modify, and share
@@ -887,7 +995,9 @@
                 // Create temporary link and trigger download
                 const link = document.createElement('a');
                 link.href = downloadUrl;
-                link.download = `${checklist.title.toLowerCase().replace(/\s+/g, '-')}-v${checklist.version}.${format}`;
+                // Change 3: Remove the version 
+                //link.download = `${checklist.title.toLowerCase().replace(/\s+/g, '-')}-v${checklist.version}.${format}`;
+                link.download = `${checklist.title.toLowerCase().replace(/\s+/g, '-')}.${format}`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -982,6 +1092,131 @@
                 closeDisclaimerModal();
             }
         }
+
+        // Filter by category
+        async function filterByCategory(category) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Clear search
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').textContent = '';
+            
+            try {
+                if (category === 'all') {
+                    await loadChecklists();
+                } else {
+                    const response = await fetch(`${API_BASE}/checklists/category/${encodeURIComponent(category)}`);
+                    checklists = await response.json();
+                    renderChecklists();
+                }
+            } catch (error) {
+                console.error('Failed to filter by category:', error);
+                showToast('Failed to filter checklists', 'error');
+            }
+        }
+
+        // Search functionality
+        async function searchChecklists() {
+            const query = document.getElementById('searchInput').value.trim();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (!query) {
+                searchResults.textContent = '';
+                await loadChecklists();
+                return;
+            }
+            
+            try {
+                searchResults.textContent = 'Searching...';
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                const results = await response.json();
+                
+                if (results.length === 0) {
+                    searchResults.textContent = 'No checklists found. Try a different search term.';
+                    checklists = [];
+                } else {
+                    searchResults.textContent = `Found ${results.length} checklist${results.length > 1 ? 's' : ''}`;
+                    checklists = results;
+                }
+                
+                renderChecklists();
+            } catch (error) {
+                console.error('Search failed:', error);
+                searchResults.textContent = 'Search failed. Please try again.';
+            }
+        }
+        
+        // Add enter key support for search
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        searchChecklists();
+                    }
+                });
+                
+                // Clear search on empty input
+                searchInput.addEventListener('input', (e) => {
+                    if (e.target.value === '') {
+                        document.getElementById('searchResults').textContent = '';
+                        loadChecklists();
+                    }
+                });
+            }
+        });
+
+        // Show contribution modal
+        function showContributionModal(checklistId, checklistTitle) {
+            document.getElementById('contributionChecklistId').value = checklistId;
+            document.getElementById('contributionChecklistTitle').textContent = checklistTitle;
+            document.getElementById('contributionForm').reset();
+            document.getElementById('contributionModal').style.display = 'block';
+        }
+        
+        // Close contribution modal
+        function closeContributionModal() {
+            document.getElementById('contributionModal').style.display = 'none';
+        }
+        
+        // Handle contribution form submission
+        document.getElementById('contributionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                checklistId: document.getElementById('contributionChecklistId').value,
+                name: document.getElementById('contributorName').value,
+                email: document.getElementById('contributorEmail').value,
+                type: document.getElementById('contributionType').value,
+                content: document.getElementById('contributionContent').value
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/contributions/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Thank you! Your contribution has been submitted for review.');
+                    closeContributionModal();
+                } else {
+                    showToast('Failed to submit contribution. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error submitting contribution:', error);
+                showToast('Failed to submit contribution. Please try again.', 'error');
+            }
+        });
 
         // Initialize on load
         window.onload = init;
